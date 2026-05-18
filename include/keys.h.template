@@ -1,0 +1,45 @@
+#pragma once
+
+// ============================================================
+// LoRaWAN OTAA Keys — NICHT ins Git committen (keys.h ist in .gitignore)
+// Diese Datei als keys.h kopieren und Werte aus TTN Console eintragen:
+//   Application → Devices → OTAA Keys
+// Format: MSB zuerst (so wie TTN anzeigt)
+// NODE_ID wird per build_flags in platformio.ini gesetzt (-D NODE_ID=1)
+// ============================================================
+
+#if NODE_ID == 1
+// Node-01: <Gerätename aus TTN Console>  (DevEUI: XXXXXXXXXXXXXXXX)
+
+static const uint64_t JOINEUI = 0x0000000000000000ULL;  // JoinEUI / AppEUI aus TTN
+
+static const uint64_t DEVEUI  = 0x0000000000000000ULL;  // DevEUI aus TTN
+
+static const uint8_t APPKEY[16] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
+#elif NODE_ID == 2
+// Node-02: <Gerätename aus TTN Console>  (DevEUI: XXXXXXXXXXXXXXXX)
+
+static const uint64_t JOINEUI = 0x0000000000000000ULL;  // JoinEUI / AppEUI aus TTN
+
+static const uint64_t DEVEUI  = 0x0000000000000000ULL;  // DevEUI aus TTN
+
+static const uint8_t APPKEY[16] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
+#else
+#error "NODE_ID muss 1 oder 2 sein (build_flags in platformio.ini)"
+#endif
+
+// NwkKey = AppKey (LoRaWAN 1.0, TTN Standard)
+static const uint8_t NWKKEY[16] = {
+    APPKEY[0],  APPKEY[1],  APPKEY[2],  APPKEY[3],
+    APPKEY[4],  APPKEY[5],  APPKEY[6],  APPKEY[7],
+    APPKEY[8],  APPKEY[9],  APPKEY[10], APPKEY[11],
+    APPKEY[12], APPKEY[13], APPKEY[14], APPKEY[15]
+};

@@ -1,0 +1,15 @@
+docker exec -it pi-influxdb-1 influx query --token "sciiizwsMXZWe49JitgRLF_f8_FWl9asMSQujTsumw-EHTOqFUaqD3qdAi9qEmunlPqma-D_284mPSY4AoSfHg==" --org hs-org 'from(bucket: "iot-daten") |> range(start: 2026-04-25T22:00:00Z, stop: 2026-05-01T05:00:00Z) |> filter(fn: (r) => r._measurement == "hs-rak-bodensensor-sued-mitte") |> count()'
+
+
+docker exec -it pi-influxdb-1 influx org list --token "sciiizwsMXZWe49JitgRLF_f8_FWl9asMSQujTsumw-EHTOqFUaqD3qdAi9qEmunlPqma-D_284mPSY4AoSfHg=="
+
+docker exec -it pi-influxdb-1 influx query --token "sciiizwsMXZWe49JitgRLF_f8_FWl9asMSQujTsumw-EHTOqFUaqD3qdAi9qEmunlPqma-D_284mPSY4AoSfHg==" --org hsorg 'import "influxdata/influxdb/schema" schema.measurements(bucket: "iot-daten")'
+
+docker exec -it pi-influxdb-1 influx query --token "sciiizwsMXZWe49JitgRLF_f8_FWl9asMSQujTsumw-EHTOqFUaqD3qdAi9qEmunlPqma-D_284mPSY4AoSfHg==" --org hsorg 'from(bucket: "iot-daten") |> range(start: -7d) |> limit(n: 5)'
+
+
+ 1. Anzeigen (Anzahl der Datenpunkte): 
+ docker exec -it pi-influxdb-1 influx query --token "sciiizwsMXZWe49JitgRLF_f8_FWl9asMSQujTsumw-EHTOqFUaqD3qdAi9qEmunlPqma-D_284mPSY4AoSfHg==" --org hsorg 'from(bucket: "iot-daten") |> range(start: 2026-04-25T22:00:00Z, stop: 2026-05-01T05:00:00Z) |> filter(fn: (r) => r._measurement == "hs-bodensensor-beet-sued-mitte") |> count()'
+
+ 2. Löschen:                                                                                                             
+ docker exec -it pi-influxdb-1 influx delete --token "sciiizwsMXZWe49JitgRLF_f8_FWl9asMSQujTsumw-EHTOqFUaqD3qdAi9qEmunlPqma-D_284mPSY4AoSfHg==" --org hsorg --bucket iot-daten  --start "2026-04-25T22:00:00Z" --stop "2026-05-01T05:00:00Z" --predicate '_measurement="hs-bodensensor-beet-sued-mitte"'#

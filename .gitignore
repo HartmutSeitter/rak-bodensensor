@@ -1,0 +1,10 @@
+.pio
+.vscode/.browse.c_cpp.db*
+.vscode/c_cpp_properties.json
+.vscode/launch.json
+.vscode/ipch
+include/keys.h
+.DS_Store
+*.zip
+main-radiolib-backup.cpp
+src/main-copy-cpp-ok-14.5.26
