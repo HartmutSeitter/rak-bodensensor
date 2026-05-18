@@ -2,6 +2,7 @@
 #include <LoRaWan-RAK4630.h>
 #include <SPI.h>
 #include <ModbusMaster.h>
+#include "keys.h"
 
 // ============================================================
 // BufferedStream: puffert write(byte)-Aufrufe von ModbusMaster
@@ -41,18 +42,7 @@ ModbusMaster node;
 // 1. SPI Instance for the Linker
 SPIClass SPI_LORA(NRF_SPIM3, 45, 43, 44); 
 
-// 2. OTAA Keys — per NODE_ID selektiert (Build-Flag in platformio.ini)
-#if NODE_ID == 1  // hs-rak-bodensensor-panorama
-uint8_t nodeDeviceEUI[8] = {0xAC, 0x1F, 0x09, 0xFF, 0xFE, 0x28, 0x5A, 0xB2};
-uint8_t nodeAppEUI[8]    = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-uint8_t nodeAppKey[16]   = {***REMOVED***};
-#elif NODE_ID == 2  // hs-bodensensor-beet-sued-mitte
-uint8_t nodeDeviceEUI[8] = {0x70, 0xB3, 0xD5, 0x7E, 0xD0, 0x07, 0x70, 0x23};
-uint8_t nodeAppEUI[8]    = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
-uint8_t nodeAppKey[16]   = {***REMOVED***};
-#else
-#error "NODE_ID nicht definiert — in platformio.ini env Build-Flag setzen"
-#endif
+// 2. OTAA Keys — aus include/keys.h (nicht im Repo, siehe .gitignore)
 
 // 3. Payload structures (Fixed the 'lmh' typo here)
 lmh_app_data_t m_lora_app_data;
